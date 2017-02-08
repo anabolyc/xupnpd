@@ -1,10 +1,10 @@
 cfg={}
 
 -- multicast interface for SSDP exchange, 'eth0', 'br0', 'br-lan' for example
-cfg.ssdp_interface='lo'
+cfg.ssdp_interface='eth0'
 
 -- 'cfg.ssdp_loop' enables multicast loop (if player and server in one host)
-cfg.ssdp_loop=1
+cfg.ssdp_loop=0
 
 -- SSDP announcement interval
 cfg.ssdp_notify_interval=15
@@ -32,7 +32,7 @@ cfg.debug=1
 --cfg.udpxy_url='http://192.168.1.1:4022'
 
 -- downstream interface for builtin multicast proxy (comment 'cfg.udpxy_url' for processing 'udp://@...' playlists)
-cfg.mcast_interface='eth1'
+cfg.mcast_interface='eth0'
 
 -- 'cfg.proxy' enables proxy for injection DLNA headers to stream
 -- 0-off, 1-radio, 2-radio/TV
@@ -73,31 +73,13 @@ cfg.default_mime_type='mpeg'
 
 -- feeds update interval (seconds, 0 - disabled)
 cfg.feeds_update_interval=0
-cfg.playlists_update_interval=0
+cfg.playlists_update_interval=60
 
 -- playlist (m3u file path or path with alias
-playlist=
-{
---    { './playlists/mozhay.m3u', 'Mozhay.tv' },
---    { './localmedia', 'Local Media Files' }
---    { './private', 'Private Media Files', '127.0.0.1;192.168.1.1' }  -- only for 127.0.0.1 and 192.168.1.1
-}
+playlist={}
 
 -- feeds list (plugin, feed name, feed type)
-feeds=
-{
-    { 'vimeo',          'channel/hd',           'Vimeo HD Channel' },
-    { 'vimeo',          'channel/hdxs',         'Vimeo Xtreme sports' },
-    { 'vimeo',          'channel/mtb',          'Vimeo MTB Channel' },
-    { 'youtube',        'channel/top_rated',    'YouTube Top Rated' },
---    { 'youtube',        'Drift0r',              'Drift0r' },
---    { 'youtube',        'XboxAhoy',             'XboxAhoy' },
---    { 'ag',             'videos',               'AG - New' },
---    { 'ivi',            'new',                  'IVI - New' },
---    { 'gametrailers',   'ps3',                   'GT - PS3' },
---    { 'giantbomb',      'all',                  'GiantBomb - All' },
---    { 'dreambox',       'http://192.168.0.1:8001/','Dreambox1' },
-}
+feeds= {}
 
 -- log ident, pid file end www root
 cfg.version='1.034'
