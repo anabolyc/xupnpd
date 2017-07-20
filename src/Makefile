@@ -15,6 +15,11 @@ CFLAGS+=-static
 LUAMYCFLAGS+=-static
 endif
 
+x86-dbg:
+	$(MAKE) -C $(LUA) CC=$(CC) a
+	$(CC) -O2 -c -o md5.o md5c.c
+	$(CC) $(CFLAGS) -g -DWITH_LIBUUID -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -o xupnpd $(SRC) md5.o -llua -ldl -lm -luuid
+
 x86:
 	$(MAKE) -C $(LUA) CC=$(CC) a
 	$(CC) -O2 -c -o md5.o md5c.c
