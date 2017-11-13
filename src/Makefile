@@ -17,17 +17,17 @@ endif
 
 x86-dbg:
 	$(MAKE) -C $(LUA) CC=$(CC) a
-	$(CC) -O2 -c -o md5.o md5c.c
-	$(CC) $(CFLAGS) -g -DWITH_LIBUUID -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -o xupnpd $(SRC) md5.o -llua -ldl -lm -luuid
+	$(CC) -O2 -c -o md5/md5.o md5/md5c.c
+	$(CC) $(CFLAGS) -g -DWITH_LIBUUID -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -o staging/xupnpd $(SRC) md5/md5.o -llua -ldl -lm -luuid
 
 x86:
 	$(MAKE) -C $(LUA) CC=$(CC) a
-	$(CC) -O2 -c -o md5.o md5c.c
-	$(CC) $(CFLAGS) -DWITH_LIBUUID -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -o xupnpd $(SRC) md5.o -llua -ldl -lm -luuid
-	strip xupnpd
+	$(CC) -O2 -c -o md5/md5.o md5/md5c.c
+	$(CC) $(CFLAGS) -DWITH_LIBUUID -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -o staging/xupnpd $(SRC) md5/md5.o -llua -ldl -lm -luuid
+	strip staging/xupnpd
 
 onion:
-	$(MAKE) embedded TARGET=onion \
+	$(MAKE) embedded \
 		STAGING_DIR=$(SDK_ONION)/staging_dir \
 		CC=$(TOOLCHAIN_ONION)/bin/mipsel-openwrt-linux-gcc \
 		CXX=$(TOOLCHAIN_ONION)/bin/mipsel-openwrt-linux-g++ \
@@ -36,10 +36,11 @@ onion:
 embedded:
 	STAGING_DIR=$(STAGING_DIR) $(MAKE) -C $(LUA) CC=$(CC) a MYCFLAGS='$(LUAMYCFLAGS)'
 	$(CC) -O2 -c -o md5/md5.o md5/md5c.c
-	$(CC) $(CFLAGS) -DWITH_URANDOM -o xupnpd-$(TARGET) $(SRC) md5/md5.o -llua -lm -ldl
-	$(STRIP) xupnpd-$(TARGET)
+	$(CC) $(CFLAGS) -DWITH_URANDOM -o staging/xupnpd $(SRC) md5/md5.o -llua -lm -ldl
+	$(STRIP) staging/xupnpd
 
 clean:
 	$(MAKE) -C $(LUA) clean
 	rm -f $(LUA)/liblua.a
 	rm -f md5/md5.o
+	rm -f staging/xupnpd
