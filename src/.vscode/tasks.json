@@ -6,8 +6,8 @@
     "isShellCommand": true,
     "tasks": [
         {
-            "taskName": "Makefile",
-            "isBuildCommand": true,
+            "taskName": "x86-dbg",
+            "isBuildCommand": false,
             "showOutput": "always",
             "args": ["x86-dbg"],
             "problemMatcher": {
@@ -22,6 +22,30 @@
                     "message": 5
                 }
             }
+        }, 
+        {
+            "taskName": "onion",
+            "isBuildCommand": true,
+            "showOutput": "always",
+            "args": ["onion"],
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": ["relative", "${workspaceRoot}"],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            }
+        },
+        {
+            "taskName": "clean",
+            "isBuildCommand": false,
+            "showOutput": "always",
+            "args": ["clean"]
         }
     ]
 }

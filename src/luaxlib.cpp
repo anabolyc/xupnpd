@@ -16,7 +16,7 @@
 #include <signal.h>
 #include "luacompat.h"
 #include "mem.h"
-#include "md5.h"
+#include "md5/md5.h"
 #include "compat.h"
 
 namespace util
