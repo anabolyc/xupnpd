@@ -22,7 +22,7 @@ x86-dbg:
 	$(MAKE) DEBUG=true x86
 
 x86:
-	#$(MAKE) -C $(LUA) CC=$(CC) a
+	$(MAKE) -C $(LUA) CC=$(CC) a
 	$(CC) -O2 -c -o lib/md5/md5.o lib/md5/md5c.c
 	$(CC) $(CFLAGS) -DWITH_LIBUUID -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -o $(STAGING)/$(TARGET) $(SRC) lib/md5/md5.o -llua -ldl -lm -luuid
 	@if [ "$(DEBUG)" != "true" ] ; then echo strip $(STAGING)/$(TARGET) && strip $(STAGING)/$(TARGET); fi
@@ -44,6 +44,6 @@ embedded:
 	@if [ "$(DEBUG)" != "true" ]; then strip $(STAGING)/$(TARGET); fi
 
 clean:
-	#$(MAKE) -C $(LUA) clean
+	$(MAKE) -C $(LUA) clean
 	rm -f lib/md5/md5.o
 	rm -f $(STAGING)/$(TARGET)
