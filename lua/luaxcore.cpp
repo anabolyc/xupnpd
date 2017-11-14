@@ -20,15 +20,15 @@
 #include <sys/resource.h>
 #include <sys/wait.h>
 #include "luacompat.h"
-#include "mem.h"
+#include "../tools/mem.h"
 #include <time.h>
-#include "mcast.h"
+#include "../tools/mcast.h"
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netinet/tcp.h>
 #include <netdb.h>
 #include <ctype.h>
-#include "compat.h"
+#include "../tools/compat.h"
 
 // HTML5
 // ACE Stream (http://torrent-tv.ru/)

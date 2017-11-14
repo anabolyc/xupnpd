@@ -7,7 +7,7 @@
 #include "luaxlib.h"
 #include <string.h>
 #include <stdio.h>
-#include "soap.h"
+#include "../tools/soap.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -15,9 +15,9 @@
 #include <dirent.h>
 #include <signal.h>
 #include "luacompat.h"
-#include "mem.h"
-#include "md5/md5.h"
-#include "compat.h"
+#include "../tools/mem.h"
+#include "../lib/md5/md5.h"
+#include "../tools/compat.h"
 
 namespace util
 {

@@ -9,10 +9,10 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include "luacompat.h"
-#include "luaxlib.h"
-#include "luaxcore.h"
-#include "luajson.h"
+#include "lua/luacompat.h"
+#include "lua/luaxlib.h"
+#include "lua/luaxcore.h"
+#include "lua/luajson.h"
 
 int main(int argc,char** argv)
 {
@@ -63,8 +63,6 @@ int main(int argc,char** argv)
         }
         lua_setglobal(L,"arg");
 
-//        char initfile[128];
-//        snprintf(initfile,sizeof(initfile),"%s.lua",argv[0]);
         const char initfile[]="xupnpd.lua";
 
         if(luaL_loadfile(L,initfile) || lua_pcall(L,0,0,0))
