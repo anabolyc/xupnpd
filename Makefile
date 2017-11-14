@@ -10,21 +10,25 @@ LUAMYCFLAGS = -DLUA_USE_LINUX
 SDK_ONION = /media/storage-unprotected/opt/onion
 TOOLCHAIN_ONION=$(SDK_ONION)/staging_dir/toolchain-mipsel_24kc_gcc-5.4.0_musl-1.1.16
 
+STAGING=staging
+TARGET=xupnpd
+
 ifeq ($(STATIC),true)
 CFLAGS+=-static
 LUAMYCFLAGS+=-static
 endif
 
 x86-dbg:
-	$(MAKE) -C $(LUA) CC=$(CC) a
-	$(CC) -O2 -c -o lib/md5/md5.o lib/md5/md5c.c
-	$(CC) $(CFLAGS) -g -DWITH_LIBUUID -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -o staging/xupnpd $(SRC) lib/md5/md5.o -llua -ldl -lm -luuid
+	$(MAKE) DEBUG=true x86
 
 x86:
-	$(MAKE) -C $(LUA) CC=$(CC) a
-	$(CC) -O2 -c -o md5/md5.o md5/md5c.c
-	$(CC) $(CFLAGS) -DWITH_LIBUUID -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -o staging/xupnpd $(SRC) lib/md5/md5.o -llua -ldl -lm -luuid
-	strip staging/xupnpd
+	#$(MAKE) -C $(LUA) CC=$(CC) a
+	$(CC) -O2 -c -o lib/md5/md5.o lib/md5/md5c.c
+	$(CC) $(CFLAGS) -DWITH_LIBUUID -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -o $(STAGING)/$(TARGET) $(SRC) lib/md5/md5.o -llua -ldl -lm -luuid
+	@if [ "$(DEBUG)" != "true" ] ; then echo strip $(STAGING)/$(TARGET) && strip $(STAGING)/$(TARGET); fi
+
+onion-static:
+	$(MAKE) STATIC=true onion
 
 onion:
 	$(MAKE) embedded \
@@ -36,11 +40,10 @@ onion:
 embedded:
 	STAGING_DIR=$(STAGING_DIR) $(MAKE) -C $(LUA) CC=$(CC) a MYCFLAGS='$(LUAMYCFLAGS)'
 	$(CC) -O2 -c -o lib/md5/md5.o lib/md5/md5c.c
-	$(CC) $(CFLAGS) -DWITH_URANDOM -o staging/xupnpd $(SRC) lib/md5/md5.o -llua -lm -ldl
-	$(STRIP) staging/xupnpd
+	$(CC) $(CFLAGS) -DWITH_URANDOM -o $(STAGING)/$(TARGET) $(SRC) lib/md5/md5.o -llua -lm -ldl
+	@if [ "$(DEBUG)" != "true" ]; then strip $(STAGING)/$(TARGET); fi
 
 clean:
-	$(MAKE) -C $(LUA) clean
-	rm -f $(LUA)/liblua.a
+	#$(MAKE) -C $(LUA) clean
 	rm -f lib/md5/md5.o
-	rm -f staging/xupnpd
+	rm -f $(STAGING)/$(TARGET)
