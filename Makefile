@@ -35,13 +35,13 @@ onion:
 		STAGING_DIR=$(SDK_ONION)/staging_dir \
 		CC=$(TOOLCHAIN_ONION)/bin/mipsel-openwrt-linux-gcc \
 		CXX=$(TOOLCHAIN_ONION)/bin/mipsel-openwrt-linux-g++ \
-		STRIP=$(TOOLCHAIN_ONION)/mipsel-openwrt-linux/bin/strip
+		STRIP=$(TOOLCHAIN_ONION)/bin/mipsel-openwrt-linux-strip
 
 embedded:
 	STAGING_DIR=$(STAGING_DIR) $(MAKE) -C $(LUA) CC=$(CC) a MYCFLAGS='$(LUAMYCFLAGS)'
 	$(CC) -O2 -c -o lib/md5/md5.o lib/md5/md5c.c
 	$(CC) $(CFLAGS) -DWITH_URANDOM -o $(STAGING)/$(TARGET) $(SRC) lib/md5/md5.o -llua -lm -ldl
-	@if [ "$(DEBUG)" != "true" ]; then strip $(STAGING)/$(TARGET); fi
+	@if [ "$(DEBUG)" != "true" ] ; then echo $(STRIP) $(STAGING)/$(TARGET) && $(STRIP) $(STAGING)/$(TARGET); fi
 
 clean:
 	$(MAKE) -C $(LUA) clean
